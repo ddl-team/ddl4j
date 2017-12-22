@@ -2,7 +2,7 @@ package ru.nsu.ddlteam.ddl4j.model.impl;
 
 import ru.nsu.ddlteam.ddl4j.model.DBType;
 
-public class Column implements Column, Cloneable {
+public class Column implements Cloneable {
     private String defaultValue;
     private String name;
     private Integer size;
