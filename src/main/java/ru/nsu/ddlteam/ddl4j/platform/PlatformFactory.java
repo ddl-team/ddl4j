@@ -1,53 +1,35 @@
 package ru.nsu.ddlteam.ddl4j.platform;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ru.nsu.ddlteam.ddl4j.model.ConnectionProperties;
-import ru.nsu.ddlteam.ddl4j.model.type.DatabaseType;
-import ru.nsu.ddlteam.ddl4j.platform.impl.PlatformImpl;
-import ru.nsu.ddlteam.ddl4j.statement.StatementConverter;
-
-import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Created by Kirill Batalin (kir55rus) on 07.05.17.
+ */
 public class PlatformFactory {
-    private static Logger logger = LogManager.getLogger();
+    private Properties properties;
 
-    private Properties connectionProperties;
-    private Properties sqlProperties;
-
-    {
-        connectionProperties = new Properties();
-        sqlProperties = new Properties();
+    public PlatformFactory() throws PlatformFactoryException {
         try {
-            connectionProperties.load(PlatformFactory.class.getResourceAsStream("/connection.properties"));
-            sqlProperties.load(PlatformFactory.class.getResourceAsStream("/sql.properties"));
-        } catch (IOException e) {
-            logger.error("Can't load config: {}", e);
+            properties = new Properties();
+            properties.load(getClass().getResourceAsStream("/platforms"));
+        } catch (Exception e) {
+            throw new PlatformFactoryException("Platform config file not found", e);
         }
     }
 
-    public Platform getPlatform(DatabaseType type, ConnectionProperties connection) {
-        String url = this.connectionProperties.getProperty(type.toString());
-        url = url.replace(":HOST", connection.getHostname())
-                .replace(":PORT", connection.getPort())
-                .replace(":SID", connection.getSid());
-
-        String clazzName = this.sqlProperties.getProperty(type.toString());
-
+    public Platform create(String name, Connection dbConnection) throws PlatformFactoryException {
         try {
-            Class clazz = getClass().getClassLoader().loadClass(clazzName);
-            Connection res = DriverManager.getConnection(url, connection.getUsername(), connection.getPassword());
-            return new PlatformImpl(res, (StatementConverter) clazz.newInstance());
-        } catch (SQLException e) {
-            logger.error("Can't create connection");
-            return null;
-        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-            logger.error("Can't load class");
-            return null;
+            name = name.toUpperCase();
+            String className = properties.getProperty(name);
+            Class<?> platformClass = Class.forName(className);
+
+            Constructor<?> platformConstructor = platformClass.getConstructor(Connection.class);
+            platformConstructor.setAccessible(true);
+            return (Platform) platformConstructor.newInstance(dbConnection);
+        } catch (Exception e) {
+            throw new PlatformFactoryException("Platform class not found", e);
         }
     }
 }

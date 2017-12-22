@@ -1,38 +1,81 @@
 package ru.nsu.ddlteam.ddl4j.platform;
 
-import ru.nsu.ddlteam.ddl4j.model.*;
-import ru.nsu.ddlteam.ddl4j.model.impl.Column;
-import ru.nsu.ddlteam.ddl4j.model.impl.Schema;
-import ru.nsu.ddlteam.ddl4j.model.impl.Table;
-import ru.nsu.ddlteam.ddl4j.statement.StatementConverter;
+import pro.batalin.ddl4j.DatabaseOperationException;
+import pro.batalin.ddl4j.model.Schema;
+import pro.batalin.ddl4j.model.Table;
+import pro.batalin.ddl4j.model.alters.Alter;
+import pro.batalin.ddl4j.model.constraints.Check;
+import pro.batalin.ddl4j.model.constraints.ForeignKey;
+import pro.batalin.ddl4j.model.constraints.PrimaryKey;
+import pro.batalin.ddl4j.model.constraints.Unique;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.List;
 
+/**
+ * Created by Kirill Batalin (kir55rus) on 06.05.17.
+ */
 public interface Platform {
     Connection getConnection();
 
-    StatementConverter getStatementConverter();
+    ResultSet executeQuery(String sql) throws DatabaseOperationException;
 
-    List<Database> loadDatabases();
+    void createTable(Table table) throws DatabaseOperationException;
 
-    List<Schema> loadSchemas(Requestable entity);
+    void dropTable(Table table) throws DatabaseOperationException;
 
-    List<Table> loadTables(Requestable entity);
+    void executeAlter(Alter alter) throws DatabaseOperationException;
 
-    List<Column> loadColumns(Requestable entity);
+    List<Schema> loadSchemas() throws DatabaseOperationException;
 
-    List<Constraint> loadConstraint(Requestable requestable); // unique, primarykey, foreign key, check
+    Table loadTable(String name) throws DatabaseOperationException;
 
-    List<PrimaryKey> loadPrimaryKeys(Requestable requestable);
+    Table loadTable(Schema schema, String name) throws DatabaseOperationException;
 
-    List<Check> loadChecks(Requestable requestable);
+    List<String> loadTables(String owner) throws DatabaseOperationException;
 
-    List<Unique> loadUnique(Requestable requestable);
+    List<String> loadPrimaryKeys(Table table) throws DatabaseOperationException;
 
-    void create(Entity entity);
+    List<String> loadPrimaryKeys(String table) throws DatabaseOperationException;
 
-    void update(Alter alter);
+    List<String> loadPrimaryKeys(Schema schema, String table) throws DatabaseOperationException;
 
-    void drop(Entity entity);
+    PrimaryKey loadPrimaryKey(String name) throws DatabaseOperationException;
+
+    PrimaryKey loadPrimaryKey(Schema schema, String name) throws DatabaseOperationException;
+
+    List<String> loadTableConstraints(Table table) throws DatabaseOperationException;
+
+    List<String> loadTableConstraints(String table) throws DatabaseOperationException;
+
+    List<String> loadUniques(Table table) throws DatabaseOperationException;
+
+    List<String> loadUniques(String table) throws DatabaseOperationException;
+
+    List<String> loadUniques(Schema schema, String table) throws DatabaseOperationException;
+
+    Unique loadUnique(String name) throws DatabaseOperationException;
+
+    Unique loadUnique(Schema schema, String name) throws DatabaseOperationException;
+
+    List<String> loadForeignKeys(Table table) throws DatabaseOperationException;
+
+    List<String> loadForeignKeys(String table) throws DatabaseOperationException;
+
+    List<String> loadForeignKeys(Schema schema, String table) throws DatabaseOperationException;
+
+    ForeignKey loadForeignKey(String name) throws DatabaseOperationException;
+
+    ForeignKey loadForeignKey(Schema schema, String name) throws DatabaseOperationException;
+
+    List<String> loadChecks(Table table) throws DatabaseOperationException;
+
+    List<String> loadChecks(String table) throws DatabaseOperationException;
+
+    List<String> loadChecks(Schema schema, String table) throws DatabaseOperationException;
+
+    Check loadCheck(String name) throws DatabaseOperationException;
+
+    Check loadCheck(Schema schema, String name) throws DatabaseOperationException;
 }
