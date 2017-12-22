@@ -15,9 +15,9 @@
         <sonar.host.url>
             http://84.237.50.237:8083
         </sonar.host.url>
-        <sonar.project.key>
+        <sonar.projectKey>
             ddl4j
-        </sonar.project.key>
+        </sonar.projectKey>
     </properties>
 
     <build>
