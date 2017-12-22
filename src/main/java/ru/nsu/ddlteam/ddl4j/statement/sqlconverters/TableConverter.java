@@ -24,7 +24,6 @@ public class TableConverter {
             default:
                 throw new IllegalArgumentException("No case for ActionType: " + type);
         }
-
     }
 
 }
