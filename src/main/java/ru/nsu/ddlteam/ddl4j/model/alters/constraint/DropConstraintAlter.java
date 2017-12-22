@@ -1,7 +1,7 @@
 package ru.nsu.ddlteam.ddl4j.model.alters.constraint;
 
-import pro.batalin.ddl4j.model.Table;
-import pro.batalin.ddl4j.model.alters.AlterBaseImpl;
+import ru.nsu.ddlteam.ddl4j.model.Table;
+import ru.nsu.ddlteam.ddl4j.model.alters.AlterBaseImpl;
 
 /**
  * Created by ilya on 22.05.17.

@@ -1,7 +1,7 @@
 package ru.nsu.ddlteam.ddl4j.model.alters.column;
 
-import pro.batalin.ddl4j.model.Column;
-import pro.batalin.ddl4j.model.Table;
+import ru.nsu.ddlteam.ddl4j.model.Column;
+import ru.nsu.ddlteam.ddl4j.model.Table;
 
 /**
  * Created by ilya on 18.05.17.

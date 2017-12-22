@@ -1,6 +1,6 @@
 package ru.nsu.ddlteam.ddl4j.model.alters;
 
-import pro.batalin.ddl4j.model.Table;
+import ru.nsu.ddlteam.ddl4j.model.Table;
 
 /**
  * Created by ilya on 08.05.17.

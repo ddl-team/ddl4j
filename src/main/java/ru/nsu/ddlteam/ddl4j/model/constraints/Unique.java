@@ -1,8 +1,8 @@
 package ru.nsu.ddlteam.ddl4j.model.constraints;
 
-import pro.batalin.ddl4j.model.Column;
-import pro.batalin.ddl4j.model.Schema;
-import pro.batalin.ddl4j.model.Table;
+import ru.nsu.ddlteam.ddl4j.model.Column;
+import ru.nsu.ddlteam.ddl4j.model.Schema;
+import ru.nsu.ddlteam.ddl4j.model.Table;
 
 /**
  * Created by Kirill Batalin (kir55rus).

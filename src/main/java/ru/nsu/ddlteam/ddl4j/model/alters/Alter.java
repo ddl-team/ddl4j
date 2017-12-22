@@ -1,7 +1,7 @@
 package ru.nsu.ddlteam.ddl4j.model.alters;
 
-import pro.batalin.ddl4j.model.SQLConvertible;
-import pro.batalin.ddl4j.model.Table;
+import ru.nsu.ddlteam.ddl4j.model.SQLConvertible;
+import ru.nsu.ddlteam.ddl4j.model.Table;
 
 /**
  * Created by ilya on 07.05.17.
