@@ -2,14 +2,11 @@ package ru.nsu.ddlteam.ddl4j.platform;
 
 import ru.nsu.ddlteam.ddl4j.model.Alter;
 import ru.nsu.ddlteam.ddl4j.model.Check;
-import ru.nsu.ddlteam.ddl4j.model.Column;
 import ru.nsu.ddlteam.ddl4j.model.Constraint;
 import ru.nsu.ddlteam.ddl4j.model.Database;
 import ru.nsu.ddlteam.ddl4j.model.Entity;
 import ru.nsu.ddlteam.ddl4j.model.PrimaryKey;
 import ru.nsu.ddlteam.ddl4j.model.Requestable;
-import ru.nsu.ddlteam.ddl4j.model.Schema;
-import ru.nsu.ddlteam.ddl4j.model.Table;
 import ru.nsu.ddlteam.ddl4j.model.Unique;
 import ru.nsu.ddlteam.ddl4j.statement.StatementConverter;
 

@@ -5,5 +5,5 @@ import ru.nsu.ddlteam.ddl4j.model.SQLable;
 import ru.nsu.ddlteam.ddl4j.model.type.ActionType;
 
 public interface SqlConverter {
-    Statement apply(SQLable t, ActionType s) throws StatementGeneratorException;
+    String apply(SQLable t, ActionType s) throws StatementGeneratorException;
 }
