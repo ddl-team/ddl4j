@@ -3,7 +3,7 @@ package ru.nsu.ddlteam.ddl4j.platform.oracle.sqltemplates.alter.column;
 import ru.nsu.ddlteam.ddl4j.model.impl.Column;
 import ru.nsu.ddlteam.ddl4j.model.impl.alter.column.AddColumnAlter;
 import ru.nsu.ddlteam.ddl4j.platform.oracle.sqltemplates.SqlTemplate;
-import ru.nsu.ddlteam.ddl4j.statement.statementgenerator.NamedParameter;
+import ru.nsu.ddlteam.ddl4j.platform.statementgenerator.NamedParameter;
 
 public class AddColumnAlterTemplate implements SqlTemplate {
     private AddColumnAlter addColumnAlter;

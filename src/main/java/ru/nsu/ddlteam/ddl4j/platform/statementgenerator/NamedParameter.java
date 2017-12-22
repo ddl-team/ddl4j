@@ -1,4 +1,4 @@
-package ru.nsu.ddlteam.ddl4j.statement.statementgenerator;
+package ru.nsu.ddlteam.ddl4j.platform.statementgenerator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

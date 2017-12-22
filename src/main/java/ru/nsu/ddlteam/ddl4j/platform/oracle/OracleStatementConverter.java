@@ -6,7 +6,7 @@ import ru.nsu.ddlteam.ddl4j.model.impl.alter.column.AddColumnAlter;
 import ru.nsu.ddlteam.ddl4j.model.type.ActionType;
 import ru.nsu.ddlteam.ddl4j.statement.SqlConverter;
 import ru.nsu.ddlteam.ddl4j.statement.StatementConverter;
-import ru.nsu.ddlteam.ddl4j.statement.StatementGeneratorException;
+import ru.nsu.ddlteam.ddl4j.platform.statementgenerator.StatementGeneratorException;
 import ru.nsu.ddlteam.ddl4j.platform.oracle.sqlconverters.TableConverter;
 import ru.nsu.ddlteam.ddl4j.platform.oracle.sqlconverters.TemplateConverter;
 import ru.nsu.ddlteam.ddl4j.platform.oracle.sqltemplates.alter.column.AddColumnAlterTemplate;

@@ -1,4 +1,4 @@
-package ru.nsu.ddlteam.ddl4j.statement;
+package ru.nsu.ddlteam.ddl4j.platform.statementgenerator;
 
 public class StatementGeneratorException extends Exception {
     public StatementGeneratorException() {
