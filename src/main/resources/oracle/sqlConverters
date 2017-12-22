@@ -1,0 +1,7 @@
+pro.batalin.ddl4j.model.Table = ru.nsu.ddlteam.ddl4j.statement.oracle.converters.table.SQLCreateTableConverter
+pro.batalin.ddl4j.model.alters.column.AddColumnAlter = ru.nsu.ddlteam.ddl4j.statement.oracle.converters.alters.column.SQLAddColumnAlterConverter
+pro.batalin.ddl4j.model.alters.column.DropColumnAlter = ru.nsu.ddlteam.ddl4j.statement.oracle.converters.alters.column.SQLDropColumnAlterConverter
+pro.batalin.ddl4j.model.alters.column.ModifyColumnAlter = ru.nsu.ddlteam.ddl4j.statement.oracle.converters.alters.column.SQLModifyColumnAlterConverter
+pro.batalin.ddl4j.model.alters.column.RenameColumnAlter = ru.nsu.ddlteam.ddl4j.statement.oracle.converters.alters.column.SQLRenameColumnAlterConverter
+pro.batalin.ddl4j.model.alters.constraint.AddConstraintUniqueAlter = ru.nsu.ddlteam.ddl4j.statement.oracle.converters.alters.constraint.SQLAddConstraintUniqueAlterConverter
+pro.batalin.ddl4j.model.alters.constraint.AddConstraintPrimaryAlter = ru.nsu.ddlteam.ddl4j.statement.oracle.converters.alters.constraint.SQLAddConstraintPrimaryAlterConverter
