@@ -1,7 +1,7 @@
 package ru.nsu.ddlteam.ddl4j.statement.statementgenerator;
 
 import ru.nsu.ddlteam.ddl4j.statement.StatementGeneratorException;
-import ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.SqlTemplate;
+import ru.nsu.ddlteam.ddl4j.platform.oracle.sqltemplates.SqlTemplate;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
