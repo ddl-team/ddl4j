@@ -1,7 +1,8 @@
-package ru.nsu.ddlteam.ddl4j.model.impl;
+package ru.nsu.ddlteam.ddl4j.model;
 
-import ru.nsu.ddlteam.ddl4j.model.DBType;
-
+/**
+ * Created by Kirill Batalin (kir55rus) on 06.05.17.
+ */
 public class Column implements Cloneable {
     private String defaultValue;
     private String name;
@@ -60,7 +61,7 @@ public class Column implements Cloneable {
     }
 
     public Column clone() throws CloneNotSupportedException {
-        Column cloneColumn = (Column) super.clone();
+        Column cloneColumn = (Column)super.clone();
 
         cloneColumn.setDefaultValue(defaultValue);
         cloneColumn.setName(name);

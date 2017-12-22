@@ -1,8 +1,8 @@
-package ru.nsu.ddlteam.ddl4j.model.impl.alter.column;
+package ru.nsu.ddlteam.ddl4j.model.alters.column;
 
-import ru.nsu.ddlteam.ddl4j.model.impl.Column;
-import ru.nsu.ddlteam.ddl4j.model.impl.Table;
-import ru.nsu.ddlteam.ddl4j.model.impl.alter.AlterBaseImpl;
+import pro.batalin.ddl4j.model.Column;
+import pro.batalin.ddl4j.model.Table;
+import pro.batalin.ddl4j.model.alters.AlterBaseImpl;
 
 /**
  * Created by ilya on 07.05.17.

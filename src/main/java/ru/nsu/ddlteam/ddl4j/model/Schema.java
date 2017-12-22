@@ -1,9 +1,9 @@
-package ru.nsu.ddlteam.ddl4j.model.impl;
+package ru.nsu.ddlteam.ddl4j.model;
 
-import ru.nsu.ddlteam.ddl4j.model.Requestable;
-import ru.nsu.ddlteam.ddl4j.model.SQLable;
-
-public class Schema implements Requestable, SQLable {
+/**
+ * Created by Kirill Batalin (kir55rus).
+ */
+public class Schema {
     private String name;
 
     public Schema() {
