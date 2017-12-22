@@ -15,14 +15,14 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class OracleStatementConverter implements StatementConverter {
-    private Map<Class, SqlConverter<SQLable, ActionType, Statement>> statementsMap = new HashMap<>();
+    private Map<Class, SqlConverter> statementsMap = new HashMap<>();
 
     public OracleStatementConverter() {
         statementsMap.put(Table.class, TableConverter::convert);
     }
 
     public Statement getStatement(SQLable object, ActionType actionType) throws StatementGeneratorException {
-        SqlConverter<SQLable, ActionType, Statement> converter = statementsMap.get(object.getClass());
+        SqlConverter converter = statementsMap.get(object.getClass());
 
         if (converter == null) {
             throw new StatementGeneratorException("No converter for class: " + object.getClass());
