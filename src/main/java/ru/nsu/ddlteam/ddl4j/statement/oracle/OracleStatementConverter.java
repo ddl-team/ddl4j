@@ -7,9 +7,9 @@ import ru.nsu.ddlteam.ddl4j.model.type.ActionType;
 import ru.nsu.ddlteam.ddl4j.statement.SqlConverter;
 import ru.nsu.ddlteam.ddl4j.statement.StatementConverter;
 import ru.nsu.ddlteam.ddl4j.statement.StatementGeneratorException;
-import ru.nsu.ddlteam.ddl4j.statement.sqlconverters.TableConverter;
-import ru.nsu.ddlteam.ddl4j.statement.sqlconverters.TemplateConverter;
-import ru.nsu.ddlteam.ddl4j.statement.sqltemplates.alter.column.AddColumnAlterTemplate;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqlconverters.TableConverter;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqlconverters.TemplateConverter;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.alter.column.AddColumnAlterTemplate;
 
 import java.util.HashMap;
 import java.util.Map;

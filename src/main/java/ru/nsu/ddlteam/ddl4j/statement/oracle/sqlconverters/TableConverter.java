@@ -1,11 +1,11 @@
-package ru.nsu.ddlteam.ddl4j.statement.sqlconverters;
+package ru.nsu.ddlteam.ddl4j.statement.oracle.sqlconverters;
 
 import ru.nsu.ddlteam.ddl4j.model.SQLable;
 import ru.nsu.ddlteam.ddl4j.model.impl.Table;
 import ru.nsu.ddlteam.ddl4j.model.type.ActionType;
 import ru.nsu.ddlteam.ddl4j.statement.StatementGeneratorException;
-import ru.nsu.ddlteam.ddl4j.statement.sqltemplates.table.TableCreateTemplate;
-import ru.nsu.ddlteam.ddl4j.statement.sqltemplates.table.TableDropTemplate;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.table.TableCreateTemplate;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.table.TableDropTemplate;
 import ru.nsu.ddlteam.ddl4j.statement.statementgenerator.StatementGenerator;
 
 public class TableConverter {

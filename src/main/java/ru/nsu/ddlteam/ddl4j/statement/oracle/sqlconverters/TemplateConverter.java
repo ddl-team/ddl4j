@@ -1,8 +1,8 @@
-package ru.nsu.ddlteam.ddl4j.statement.sqlconverters;
+package ru.nsu.ddlteam.ddl4j.statement.oracle.sqlconverters;
 
 import ru.nsu.ddlteam.ddl4j.statement.SqlConverter;
 import ru.nsu.ddlteam.ddl4j.statement.StatementGeneratorException;
-import ru.nsu.ddlteam.ddl4j.statement.sqltemplates.SqlTemplate;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.SqlTemplate;
 import ru.nsu.ddlteam.ddl4j.statement.statementgenerator.StatementGenerator;
 
 import java.lang.reflect.Constructor;

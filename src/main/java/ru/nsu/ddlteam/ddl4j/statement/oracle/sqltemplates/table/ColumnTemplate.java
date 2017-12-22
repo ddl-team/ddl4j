@@ -1,7 +1,7 @@
-package ru.nsu.ddlteam.ddl4j.statement.sqltemplates.table;
+package ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.table;
 
 import ru.nsu.ddlteam.ddl4j.model.impl.Column;
-import ru.nsu.ddlteam.ddl4j.statement.sqltemplates.SqlTemplate;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.SqlTemplate;
 import ru.nsu.ddlteam.ddl4j.statement.statementgenerator.NamedParameter;
 
 public class ColumnTemplate implements SqlTemplate{

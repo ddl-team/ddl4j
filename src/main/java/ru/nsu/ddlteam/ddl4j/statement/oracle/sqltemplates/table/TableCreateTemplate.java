@@ -1,9 +1,9 @@
-package ru.nsu.ddlteam.ddl4j.statement.sqltemplates.table;
+package ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.table;
 
 import ru.nsu.ddlteam.ddl4j.model.impl.Column;
 import ru.nsu.ddlteam.ddl4j.model.impl.Table;
 import ru.nsu.ddlteam.ddl4j.statement.StatementGeneratorException;
-import ru.nsu.ddlteam.ddl4j.statement.sqltemplates.SqlTemplate;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.SqlTemplate;
 import ru.nsu.ddlteam.ddl4j.statement.statementgenerator.NamedParameter;
 import ru.nsu.ddlteam.ddl4j.statement.statementgenerator.StatementGenerator;
 

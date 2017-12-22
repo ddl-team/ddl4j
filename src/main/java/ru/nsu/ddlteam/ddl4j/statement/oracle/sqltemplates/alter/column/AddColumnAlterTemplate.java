@@ -1,8 +1,8 @@
-package ru.nsu.ddlteam.ddl4j.statement.sqltemplates.alter.column;
+package ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.alter.column;
 
 import ru.nsu.ddlteam.ddl4j.model.impl.Column;
 import ru.nsu.ddlteam.ddl4j.model.impl.alter.column.AddColumnAlter;
-import ru.nsu.ddlteam.ddl4j.statement.sqltemplates.SqlTemplate;
+import ru.nsu.ddlteam.ddl4j.statement.oracle.sqltemplates.SqlTemplate;
 import ru.nsu.ddlteam.ddl4j.statement.statementgenerator.NamedParameter;
 
 public class AddColumnAlterTemplate implements SqlTemplate {
