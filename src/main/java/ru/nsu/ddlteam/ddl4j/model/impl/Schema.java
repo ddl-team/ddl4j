@@ -1,14 +1,15 @@
 package ru.nsu.ddlteam.ddl4j.model.impl;
 
-import ru.nsu.ddlteam.ddl4j.model.Schema;
+import ru.nsu.ddlteam.ddl4j.model.Requestable;
+import ru.nsu.ddlteam.ddl4j.model.SQLable;
 
-public class SchemaImpl implements Schema {
+public class Schema implements Requestable, SQLable {
     private String name;
 
-    public SchemaImpl() {
+    public Schema() {
     }
 
-    public SchemaImpl(String name) {
+    public Schema(String name) {
         setName(name);
     }
 

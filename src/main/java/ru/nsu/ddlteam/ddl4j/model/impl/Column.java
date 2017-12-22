@@ -1,9 +1,8 @@
 package ru.nsu.ddlteam.ddl4j.model.impl;
 
-import ru.nsu.ddlteam.ddl4j.model.Column;
 import ru.nsu.ddlteam.ddl4j.model.DBType;
 
-public class ColumnImpl implements Column, Cloneable {
+public class Column implements Column, Cloneable {
     private String defaultValue;
     private String name;
     private Integer size;
@@ -60,8 +59,8 @@ public class ColumnImpl implements Column, Cloneable {
         this.required = required;
     }
 
-    public ColumnImpl clone() throws CloneNotSupportedException {
-        ColumnImpl cloneColumn = (ColumnImpl) super.clone();
+    public Column clone() throws CloneNotSupportedException {
+        Column cloneColumn = (Column) super.clone();
 
         cloneColumn.setDefaultValue(defaultValue);
         cloneColumn.setName(name);
@@ -79,7 +78,7 @@ public class ColumnImpl implements Column, Cloneable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ColumnImpl column = (ColumnImpl) o;
+        Column column = (Column) o;
 
         if (primaryKey != column.primaryKey) return false;
         if (required != column.required) return false;

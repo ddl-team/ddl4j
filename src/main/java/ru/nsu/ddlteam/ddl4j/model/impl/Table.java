@@ -1,36 +1,34 @@
 package ru.nsu.ddlteam.ddl4j.model.impl;
 
-import ru.nsu.ddlteam.ddl4j.model.Table;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TableImpl implements Table, Cloneable {
-    private List<ColumnImpl> columns = new ArrayList<>();
-    private Map<String, ColumnImpl> columnMap = new HashMap<>();
+public class Table implements Cloneable {
+    private List<Column> columns = new ArrayList<>();
+    private Map<String, Column> columnMap = new HashMap<>();
     private String name;
-    private SchemaImpl schema;
+    private Schema schema;
 
-    public void addColumn(ColumnImpl column) {
+    public void addColumn(Column column) {
         columns.add(column);
         columnMap.put(column.getName(), column);
     }
 
-    public List<ColumnImpl> getColumns() {
+    public List<Column> getColumns() {
         return columns;
     }
 
-    public ColumnImpl getColumn(String name) {
+    public Column getColumn(String name) {
         return columnMap.get(name);
     }
 
     @Override
-    public TableImpl clone() throws CloneNotSupportedException {
-        TableImpl cloneTable = (TableImpl)super.clone();
+    public Table clone() throws CloneNotSupportedException {
+        Table cloneTable = (Table)super.clone();
         cloneTable.setName(name);
-        for (ColumnImpl c : columns) {
+        for (Column c : columns) {
             cloneTable.addColumn(c.clone());
         }
         return cloneTable;
@@ -52,11 +50,11 @@ public class TableImpl implements Table, Cloneable {
         return schema.getName() + "." + name;
     }
 
-    public SchemaImpl getSchema() {
+    public Schema getSchema() {
         return schema;
     }
 
-    public void setSchema(SchemaImpl schema) {
+    public void setSchema(Schema schema) {
         this.schema = schema;
     }
 
