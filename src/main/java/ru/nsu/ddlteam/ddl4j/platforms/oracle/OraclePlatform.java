@@ -1,7 +1,6 @@
 package ru.nsu.ddlteam.ddl4j.platforms.oracle;
 
 import ru.nsu.ddlteam.ddl4j.DatabaseOperationException;
-import pro.batalin.ddl4j.model.*;
 import ru.nsu.ddlteam.ddl4j.model.*;
 import ru.nsu.ddlteam.ddl4j.model.alters.Alter;
 import ru.nsu.ddlteam.ddl4j.model.constraints.Check;
