@@ -3,6 +3,8 @@ package ru.nsu.ddlteam.ddl4j.platforms.oracle.converters;
 import com.impetus.annovention.ClasspathDiscoverer;
 import com.impetus.annovention.Discoverer;
 import com.impetus.annovention.listener.ClassAnnotationDiscoveryListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.nsu.ddlteam.ddl4j.model.SQLConvertible;
 
 import java.lang.reflect.Constructor;
@@ -13,7 +15,7 @@ import java.util.Map;
  * Created by Kirill Batalin (kir55rus) on 08.05.17.
  */
 public class SQLConverterFactory {
-
+    private static final Logger logger = LogManager.getLogger(SQLConverterFactory.class);
     private Map<Class, Map<String, Class>> convertersMap = new HashMap<>();
 
 //    public SQLConverterFactory() throws SQLConverterFactoryException {
@@ -39,7 +41,7 @@ public class SQLConverterFactory {
                 actionMap.put(converterAnnotation.action().toUpperCase(), converterClass);
 
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                logger.error(e);
             }
         }
 
