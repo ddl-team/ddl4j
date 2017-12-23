@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Kirill Batalin (kir55rus) on 06.05.17.
  */
-public class Table {
+public class Table implements SQLConvertible {
     private List<Column> columns = new ArrayList<>();
     private Map<String, Column> columnMap = new HashMap<>();
     private String name;
@@ -27,6 +27,9 @@ public class Table {
 
     public Column getColumn(String name) {
         return columnMap.get(name);
+    }
+
+    public Table() {
     }
 
     public Table(Table table) {

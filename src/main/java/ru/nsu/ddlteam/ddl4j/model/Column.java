@@ -60,6 +60,9 @@ public class Column {
         this.required = required;
     }
 
+    public Column() {
+    }
+
     public Column(Column column) {
         this.defaultValue = column.defaultValue;
         this.name = column.name;
