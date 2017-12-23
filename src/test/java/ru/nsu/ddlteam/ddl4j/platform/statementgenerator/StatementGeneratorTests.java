@@ -18,7 +18,7 @@ import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverterFactory;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.table.SQLColumnConverter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.table.SQLDropTableConverter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.StatementGenerator;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.StatementGenerator;
 
 import java.util.Arrays;
 
