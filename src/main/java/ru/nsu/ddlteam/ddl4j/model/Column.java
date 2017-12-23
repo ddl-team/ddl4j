@@ -3,7 +3,7 @@ package ru.nsu.ddlteam.ddl4j.model;
 /**
  * Created by Kirill Batalin (kir55rus) on 06.05.17.
  */
-public class Column implements Cloneable {
+public class Column {
     private String defaultValue;
     private String name;
     private Integer size;
@@ -60,18 +60,14 @@ public class Column implements Cloneable {
         this.required = required;
     }
 
-    public Column clone() throws CloneNotSupportedException {
-        Column cloneColumn = (Column)super.clone();
-
-        cloneColumn.setDefaultValue(defaultValue);
-        cloneColumn.setName(name);
-        cloneColumn.setSize(size);
-        cloneColumn.setType(type.clone());
-        cloneColumn.setPrimaryKey(primaryKey);
-        cloneColumn.setRequired(required);
-        cloneColumn.setUnique(unique);
-
-        return cloneColumn;
+    public Column(Column column) {
+        this.defaultValue = column.defaultValue;
+        this.name = column.name;
+        this.size = column.size;
+        this.type = column.type;
+        this.primaryKey = column.primaryKey;
+        this.required = column.required;
+        this.unique = column.unique;
     }
 
     @Override
