@@ -4,9 +4,9 @@ import ru.nsu.ddlteam.ddl4j.model.Column;
 import ru.nsu.ddlteam.ddl4j.model.Table;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.Converter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.NamedParameter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.StatementGenerator;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.StatementGeneratorException;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.NamedParameter;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.StatementGenerator;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.StatementGeneratorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Converter(modelClass = Table.class)
 public class SQLCreateTableConverter implements SQLConverter {
-    private final String TEMPLATE = "CREATE TABLE :table (:columns)";
+    private static final String TEMPLATE = "CREATE TABLE :table (:columns)";
     private Table table;
 
     public SQLCreateTableConverter(Table table) {

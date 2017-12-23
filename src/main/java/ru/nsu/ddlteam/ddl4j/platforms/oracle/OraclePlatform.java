@@ -11,8 +11,8 @@ import ru.nsu.ddlteam.ddl4j.platforms.PlatformBaseImpl;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverterFactory;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverterFactoryException;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.StatementGenerator;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.StatementGeneratorException;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.StatementGenerator;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.StatementGeneratorException;
 
 import java.sql.*;
 import java.util.ArrayList;

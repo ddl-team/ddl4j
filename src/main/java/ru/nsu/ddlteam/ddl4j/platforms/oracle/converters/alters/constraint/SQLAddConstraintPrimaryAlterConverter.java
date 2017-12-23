@@ -4,7 +4,7 @@ import ru.nsu.ddlteam.ddl4j.model.Column;
 import ru.nsu.ddlteam.ddl4j.model.alters.constraint.AddConstraintPrimaryAlter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.Converter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.NamedParameter;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.NamedParameter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 @Converter(modelClass = AddConstraintPrimaryAlter.class)
 public class SQLAddConstraintPrimaryAlterConverter implements SQLConverter {
-    private final String TEMPLATE =
+    private static final String TEMPLATE =
             "ALTER TABLE :table ADD CONSTRAINT :name PRIMARY KEY ( :columns )";
     private AddConstraintPrimaryAlter addConstraintPrimaryAlter;
 

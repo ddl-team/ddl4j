@@ -4,7 +4,7 @@ import ru.nsu.ddlteam.ddl4j.model.Column;
 import ru.nsu.ddlteam.ddl4j.model.alters.column.ModifyColumnAlter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.Converter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.NamedParameter;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.NamedParameter;
 
 /**
  * Created by ilya on 18.05.17.

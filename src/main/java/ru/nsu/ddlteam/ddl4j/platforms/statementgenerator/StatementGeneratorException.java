@@ -1,4 +1,4 @@
-package ru.nsu.ddlteam.ddl4j.platforms.statement_generator;
+package ru.nsu.ddlteam.ddl4j.platforms.statementgenerator;
 
 /**
  * Created by ilya on 18.05.17.

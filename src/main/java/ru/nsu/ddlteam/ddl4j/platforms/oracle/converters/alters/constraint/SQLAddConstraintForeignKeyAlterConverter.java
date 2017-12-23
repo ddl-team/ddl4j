@@ -3,14 +3,14 @@ package ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.alters.constraint;
 import ru.nsu.ddlteam.ddl4j.model.alters.constraint.AddConstraintForeignKeyAlter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.Converter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.NamedParameter;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.NamedParameter;
 
 /**
  * Created by ilya on 21.05.17.
  */
 @Converter(modelClass = AddConstraintForeignKeyAlter.class)
 public class SQLAddConstraintForeignKeyAlterConverter implements SQLConverter {
-    private final String TEMPLATE =
+    private static final String TEMPLATE =
             "ALTER TABLE :table ADD CONSTRAINT :name FOREIGN KEY ( :column ) REFERENCES :ref_table ( :ref_column )";
 
     private AddConstraintForeignKeyAlter addConstraintForeignKeyAlter;

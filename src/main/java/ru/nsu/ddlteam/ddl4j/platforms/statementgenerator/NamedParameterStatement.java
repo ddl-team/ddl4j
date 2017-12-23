@@ -1,4 +1,4 @@
-package ru.nsu.ddlteam.ddl4j.platforms.statement_generator;
+package ru.nsu.ddlteam.ddl4j.platforms.statementgenerator;
 
 import java.sql.*;
 import java.util.*;
@@ -43,7 +43,7 @@ public class NamedParameterStatement {
      */
     static final String parse(String query, Map paramMap) {
         int length=query.length();
-        StringBuffer parsedQuery=new StringBuffer(length);
+        StringBuilder parsedQuery=new StringBuilder(length);
         boolean inSingleQuote=false;
         boolean inDoubleQuote=false;
         int index=1;
@@ -78,7 +78,7 @@ public class NamedParameterStatement {
                         indexList=new LinkedList();
                         paramMap.put(name, indexList);
                     }
-                    indexList.add(new Integer(index));
+                    indexList.add(index);
 
                     index++;
                 }

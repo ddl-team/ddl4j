@@ -3,14 +3,14 @@ package ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.alters.column;
 import ru.nsu.ddlteam.ddl4j.model.alters.column.DropColumnAlter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.Converter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.NamedParameter;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.NamedParameter;
 
 /**
  * Created by ilya on 18.05.17.
  */
 @Converter(modelClass = DropColumnAlter.class)
 public class SQLDropColumnAlterConverter implements SQLConverter {
-    private final String TEMPLATE = "ALTER TABLE :table DROP COLUMN :column";
+    private static final String TEMPLATE = "ALTER TABLE :table DROP COLUMN :column";
     private final DropColumnAlter dropColumnAlter;
 
     public SQLDropColumnAlterConverter(DropColumnAlter dropColumnAlter) {
