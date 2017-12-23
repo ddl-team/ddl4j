@@ -70,7 +70,7 @@ public class StatementGeneratorTests {
 
     @Test
     public void modifyAlterStatementTest() throws Exception {
-        Column newColumn = column.clone();
+        Column newColumn = new Column(column);
         newColumn.setType(new DBType("BOOLEAN"));
         newColumn.setDefaultValue("FALSE");
         ModifyColumnAlter modifyColumnAlter = new ModifyColumnAlter(table, column, newColumn);
@@ -86,7 +86,7 @@ public class StatementGeneratorTests {
 
     @Test
     public void renameAlterStatementTest() throws Exception {
-        Column newColumn = column.clone();
+        Column newColumn = new Column(column);
         newColumn.setName("NEW_COLUMN");
 
         RenameColumnAlter renameColumnAlter = new RenameColumnAlter(table, column, newColumn);
@@ -102,11 +102,11 @@ public class StatementGeneratorTests {
 
     @Test
     public void addUniqueConstraintStatementTest() throws Exception {
-        Column col1 = column.clone();
+        Column col1 = new Column(column);
         col1.setName("col1");
-        Column col2 = column.clone();
+        Column col2 = new Column(column);
         col2.setName("col2");
-        Column col3 = column.clone();
+        Column col3 = new Column(column);
         col3.setName("col3");
 
         AddConstraintUniqueAlter addConstraintUniqueAlter =
@@ -123,11 +123,11 @@ public class StatementGeneratorTests {
 
     @Test
     public void addPrimaryConstraintStatementTest() throws Exception {
-        Column col1 = column.clone();
+        Column col1 = new Column(column);
         col1.setName("col1");
-        Column col2 = column.clone();
+        Column col2 = new Column(column);
         col2.setName("col2");
-        Column col3 = column.clone();
+        Column col3 = new Column(column);
         col3.setName("col3");
 
         AddConstraintPrimaryAlter addConstraintPrimaryAlter =
@@ -220,7 +220,7 @@ public class StatementGeneratorTests {
         Table refTable = new Table();
         refTable.setName("REF_TABLE");
 
-        Column refColumn = column.clone();
+        Column refColumn = new Column(column);
         refColumn.setName("ref_column");
 
         AddConstraintForeignKeyAlter alter = new AddConstraintForeignKeyAlter(table, column, refTable, refColumn, "fk");
