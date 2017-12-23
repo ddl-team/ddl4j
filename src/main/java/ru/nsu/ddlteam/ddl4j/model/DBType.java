@@ -3,7 +3,7 @@ package ru.nsu.ddlteam.ddl4j.model;
 /**
  * Created by Kirill Batalin (kir55rus).
  */
-public class DBType implements Cloneable {
+public class DBType {
     private String type;
 
     public DBType() {
@@ -41,11 +41,7 @@ public class DBType implements Cloneable {
         return type != null ? type.hashCode() : 0;
     }
 
-    @Override
-    public DBType clone() throws CloneNotSupportedException {
-        DBType dbType = (DBType) super.clone();
-        dbType.setType(type);
-
-        return dbType;
+    public DBType(DBType dbType) {
+        this.type = dbType.type;
     }
 }

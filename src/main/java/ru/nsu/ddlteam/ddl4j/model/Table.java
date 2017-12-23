@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by Kirill Batalin (kir55rus) on 06.05.17.
  */
-public class Table implements Cloneable, SQLConvertible {
+public class Table {
     private List<Column> columns = new ArrayList<>();
     private Map<String, Column> columnMap = new HashMap<>();
     private String name;
@@ -27,14 +29,11 @@ public class Table implements Cloneable, SQLConvertible {
         return columnMap.get(name);
     }
 
-    @Override
-    public Table clone() throws CloneNotSupportedException {
-        Table cloneTable = (Table)super.clone();
-        cloneTable.setName(name);
-        for (Column c : columns) {
-            cloneTable.addColumn(c.clone());
-        }
-        return cloneTable;
+    public Table(Table table) {
+        this.name = table.name;
+        this.schema = table.schema;
+        this.columns = table.columns.stream().map(Column::new).collect(Collectors.toList());
+        this.columnMap = this.columns.stream().collect(Collectors.toMap(Column::getName, Function.identity()));
     }
 
     public String getName() {
