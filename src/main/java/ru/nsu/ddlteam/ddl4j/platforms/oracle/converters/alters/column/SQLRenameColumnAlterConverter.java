@@ -3,14 +3,14 @@ package ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.alters.column;
 import ru.nsu.ddlteam.ddl4j.model.alters.column.RenameColumnAlter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.Converter;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.NamedParameter;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.NamedParameter;
 
 /**
  * Created by ilya on 18.05.17.
  */
 @Converter(modelClass = RenameColumnAlter.class)
 public class SQLRenameColumnAlterConverter implements SQLConverter {
-    private final String TEMPLATE = "ALTER TABLE :table RENAME COLUMN :old_name TO :new_name";
+    private static final String TEMPLATE = "ALTER TABLE :table RENAME COLUMN :old_name TO :new_name";
     private RenameColumnAlter renameColumnAlter;
 
     public SQLRenameColumnAlterConverter(RenameColumnAlter renameColumnAlter) {

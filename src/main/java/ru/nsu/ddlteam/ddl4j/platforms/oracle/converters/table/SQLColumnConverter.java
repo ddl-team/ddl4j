@@ -2,7 +2,7 @@ package ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.table;
 
 import ru.nsu.ddlteam.ddl4j.model.Column;
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
-import ru.nsu.ddlteam.ddl4j.platforms.statement_generator.NamedParameter;
+import ru.nsu.ddlteam.ddl4j.platforms.statementgenerator.NamedParameter;
 
 /**
  * Created by Kirill Batalin (kir55rus).

@@ -1,4 +1,4 @@
-package ru.nsu.ddlteam.ddl4j.platforms.statement_generator;
+package ru.nsu.ddlteam.ddl4j.platforms.statementgenerator;
 
 import ru.nsu.ddlteam.ddl4j.platforms.oracle.converters.SQLConverter;
 
@@ -11,7 +11,8 @@ import java.util.List;
  */
 @SuppressWarnings(value = "unchecked")
 public class StatementGenerator {
-    
+    private StatementGenerator() {}
+
     public static String generate(SQLConverter converter) throws StatementGeneratorException {
         try {
             String template = converter.getTemplate();
@@ -21,7 +22,6 @@ public class StatementGenerator {
             for (Method m : methods) {
                 NamedParameter annotation = m.getAnnotation(NamedParameter.class);
                 if (annotation != null) {
-                    // TODO: 18.05.17 CREATE SHIELDING
                     m.setAccessible(true);
 
                     Object value = m.invoke(converter);
