@@ -41,8 +41,7 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public ResultSet executeQuery(String sql) throws DatabaseOperationException {
-        try {
-            Statement statement = dbConnection.createStatement();
+        try (Statement statement = dbConnection.createStatement()) {
             return statement.executeQuery(sql);
         } catch (SQLException e) {
             throw new DatabaseOperationException(e);
@@ -95,10 +94,8 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public List<Schema> loadSchemas() throws DatabaseOperationException {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM ALL_USERS");
-            ResultSet resultSet = statement.executeQuery();
-
+        try (PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM ALL_USERS");
+             ResultSet resultSet = statement.executeQuery()) {
             List<Schema> schemas = new ArrayList<>();
             while (resultSet.next()) {
                 schemas.add(new Schema(resultSet.getString("USERNAME")));
@@ -113,41 +110,40 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public Table loadTable(Schema schema, String name) throws DatabaseOperationException {
-        try {
-            StringBuilder sql = new StringBuilder("SELECT * FROM ALL_TAB_COLUMNS WHERE TABLE_NAME=?");
-            if (schema != null) {
-                sql.append(" AND OWNER=?");
-            }
+        StringBuilder sql = new StringBuilder("SELECT * FROM ALL_TAB_COLUMNS WHERE TABLE_NAME=?");
+        if (schema != null) {
+            sql.append(" AND OWNER=?");
+        }
+        try (PreparedStatement statement = dbConnection.prepareStatement(sql.toString())) {
 
-            PreparedStatement statement = dbConnection.prepareStatement(sql.toString());
             statement.setString(1, name);
             if (schema != null) {
                 statement.setString(2, schema.getName());
             }
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet == null || !resultSet.next()) {
+                    return null;
+                }
 
-            if (resultSet == null || !resultSet.next()) {
-                return null;
+                Table table = new Table();
+                table.setName(name);
+
+                table.setSchema(new Schema(resultSet.getString("OWNER")));
+
+                do {
+                    Column column = new Column();
+                    column.setName(resultSet.getString("COLUMN_NAME"));
+                    column.setType(new DBType(resultSet.getString("DATA_TYPE")));
+                    column.setSize(Integer.valueOf(resultSet.getString("DATA_LENGTH")));
+                    column.setDefaultValue(resultSet.getString("DATA_DEFAULT"));
+                    column.setRequired("N".equals(resultSet.getString("NULLABLE")));
+                    table.addColumn(column);
+
+                } while (resultSet.next());
+
+
+                return table;
             }
-
-            Table table = new Table();
-            table.setName(name);
-
-            table.setSchema(new Schema(resultSet.getString("OWNER")));
-
-            do {
-                Column column = new Column();
-                column.setName(resultSet.getString("COLUMN_NAME"));
-                column.setType(new DBType(resultSet.getString("DATA_TYPE")));
-                column.setSize(Integer.valueOf(resultSet.getString("DATA_LENGTH")));
-                column.setDefaultValue(resultSet.getString("DATA_DEFAULT"));
-                column.setRequired("N".equals(resultSet.getString("NULLABLE")));
-                table.addColumn(column);
-
-            } while (resultSet.next());
-
-
-            return table;
 
         } catch (SQLException e) {
             throw new DatabaseOperationException("Can't get table info", e);
@@ -161,18 +157,16 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public List<String> loadTables(String owner) throws DatabaseOperationException {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM ALL_TABLES WHERE OWNER=?");
+        try (PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM ALL_TABLES WHERE OWNER=?")) {
             statement.setString(1, owner);
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<String> tables = new ArrayList<>();
+                while (resultSet.next()) {
+                    tables.add(resultSet.getString("TABLE_NAME"));
+                }
 
-            List<String> tables = new ArrayList<>();
-            while (resultSet.next()) {
-                tables.add(resultSet.getString("TABLE_NAME"));
+                return tables;
             }
-
-            return tables;
-
         } catch (SQLException e) {
             throw new DatabaseOperationException("Can't get tables info", e);
         }
@@ -195,41 +189,38 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public PrimaryKey loadPrimaryKey(Schema schema, String name) throws DatabaseOperationException {
-        try {
-            StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_CONS_COLUMNS WHERE CONSTRAINT_NAME=?");
-            if (schema != null) {
-                sql.append(" AND OWNER=?");
-            }
-
-            PreparedStatement statement = dbConnection.prepareStatement(sql.toString());
+        StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_CONS_COLUMNS WHERE CONSTRAINT_NAME=?");
+        if (schema != null) {
+            sql.append(" AND OWNER=?");
+        }
+        try (PreparedStatement statement = dbConnection.prepareStatement(sql.toString())) {
             statement.setString(1, name);
             if (schema != null) {
                 statement.setString(2, schema.getName());
             }
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (!resultSet.next()) {
+                    return null;
+                }
 
-            if (!resultSet.next()) {
-                return null;
+                Table table = loadTable(resultSet.getString("TABLE_NAME"));
+                if (table == null) {
+                    return null;
+                }
+
+                List<Column> columns = new ArrayList<>();
+
+                do {
+                    Column column = table.getColumn(resultSet.getString("COLUMN_NAME"));
+                    columns.add(column);
+                } while (resultSet.next());
+
+                PrimaryKey primaryKey = new PrimaryKey(name);
+                primaryKey.setTable(table);
+                primaryKey.setColumns(columns);
+
+                return primaryKey;
             }
-
-            Table table = loadTable(resultSet.getString("TABLE_NAME"));
-            if (table == null) {
-                return null;
-            }
-
-            List<Column> columns = new ArrayList<>();
-
-            do {
-                Column column = table.getColumn(resultSet.getString("COLUMN_NAME"));
-                columns.add(column);
-            } while (resultSet.next());
-
-            PrimaryKey primaryKey = new PrimaryKey(name);
-            primaryKey.setTable(table);
-            primaryKey.setColumns(columns);
-
-            return primaryKey;
-
         } catch (SQLException e) {
             throw new DatabaseOperationException("Can't get primary key", e);
         }
@@ -245,16 +236,14 @@ public class OraclePlatform extends PlatformBaseImpl {
     }
 
     private List<String> loadTableConstraints(Schema schema, String table, String type) throws DatabaseOperationException {
-        try {
-            StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_CONSTRAINTS WHERE TABLE_NAME=?");
-            if (type != null) {
-                sql.append(" AND CONSTRAINT_TYPE=?");
-            }
-            if (schema != null) {
-                sql.append(" AND OWNER=?");
-            }
-
-            PreparedStatement statement = dbConnection.prepareStatement(sql.toString());
+        StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_CONSTRAINTS WHERE TABLE_NAME=?");
+        if (type != null) {
+            sql.append(" AND CONSTRAINT_TYPE=?");
+        }
+        if (schema != null) {
+            sql.append(" AND OWNER=?");
+        }
+        try (PreparedStatement statement = dbConnection.prepareStatement(sql.toString())) {
             statement.setString(1, table);
             if(type != null) {
                 statement.setString(2, type);
@@ -262,15 +251,14 @@ public class OraclePlatform extends PlatformBaseImpl {
             if (schema != null) {
                 statement.setString(3, schema.getName());
             }
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<String> constraints = new ArrayList<>();
+                while (resultSet.next()) {
+                    constraints.add(resultSet.getString("CONSTRAINT_NAME"));
+                }
 
-            List<String> constraints = new ArrayList<>();
-            while (resultSet.next()) {
-                constraints.add(resultSet.getString("CONSTRAINT_NAME"));
+                return constraints;
             }
-
-            return constraints;
-
         } catch (SQLException e) {
             throw new DatabaseOperationException("Can't get constraints", e);
         }
@@ -293,27 +281,24 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public List<String> loadUniques(Schema schema, String table) throws DatabaseOperationException {
-        try {
-            StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_INDEXES WHERE TABLE_NAME=?");
-            if (schema != null) {
-                sql.append(" AND OWNER=?");
-            }
-
-            PreparedStatement statement = dbConnection.prepareStatement(sql.toString());
+        StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_INDEXES WHERE TABLE_NAME=?");
+        if (schema != null) {
+            sql.append(" AND OWNER=?");
+        }
+        try (PreparedStatement statement = dbConnection.prepareStatement(sql.toString())) {
             statement.setString(1, table);
             if (schema != null) {
                 statement.setString(2, schema.getName());
             }
 
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<String> uniques = new ArrayList<>();
+                while (resultSet.next()) {
+                    uniques.add(resultSet.getString("INDEX_NAME"));
+                }
 
-            List<String> uniques = new ArrayList<>();
-            while (resultSet.next()) {
-                uniques.add(resultSet.getString("INDEX_NAME"));
+                return uniques;
             }
-
-            return uniques;
-
         } catch (SQLException e) {
             throw new DatabaseOperationException("Can't get indexes", e);
         }
@@ -326,36 +311,34 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public Unique loadUnique(Schema schema, String name) throws DatabaseOperationException {
-        try {
-            StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_IND_COLUMNS WHERE INDEX_NAME=?");
-            if (schema != null) {
-                sql.append(" AND TABLE_OWNER=?");
-            }
-
-            PreparedStatement statement = dbConnection.prepareStatement(sql.toString());
+        StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_IND_COLUMNS WHERE INDEX_NAME=?");
+        if (schema != null) {
+            sql.append(" AND TABLE_OWNER=?");
+        }
+        try (PreparedStatement statement = dbConnection.prepareStatement(sql.toString())) {
             statement.setString(1, name);
             if (schema != null) {
                 statement.setString(2, schema.getName());
             }
-            ResultSet resultSet = statement.executeQuery();
 
-            if (!resultSet.next()) {
-                return null;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (!resultSet.next()) {
+                    return null;
+                }
+
+                Table table = loadTable(resultSet.getString("TABLE_NAME"));
+                if (table == null) {
+                    return null;
+                }
+
+                Column column = table.getColumn(resultSet.getString("COLUMN_NAME"));
+
+                Unique unique = new Unique(name);
+                unique.setTable(table);
+                unique.setColumn(column);
+
+                return unique;
             }
-
-            Table table = loadTable(resultSet.getString("TABLE_NAME"));
-            if (table == null) {
-                return null;
-            }
-
-            Column column = table.getColumn(resultSet.getString("COLUMN_NAME"));
-
-            Unique unique = new Unique(name);
-            unique.setTable(table);
-            unique.setColumn(column);
-
-            return unique;
-
         } catch (SQLException e) {
             throw new DatabaseOperationException("Can't get unique", e);
         }
@@ -383,18 +366,20 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public ForeignKey loadForeignKey(Schema schema, String name) throws DatabaseOperationException {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
             StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_CONSTRAINTS WHERE CONSTRAINT_NAME=?");
             if (schema != null) {
                 sql.append(" AND OWNER=?");
             }
 
-            PreparedStatement statement = dbConnection.prepareStatement(sql.toString());
+            statement = dbConnection.prepareStatement(sql.toString());
             statement.setString(1, name);
             if (schema != null) {
                 statement.setString(2, schema.getName());
             }
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
             if(!resultSet.next() || !"R".equals(resultSet.getString("CONSTRAINT_TYPE"))) {
                 return null;
@@ -407,11 +392,13 @@ public class OraclePlatform extends PlatformBaseImpl {
                 sql.append(" AND OWNER=?");
             }
 
+            statement.close();
             statement = dbConnection.prepareStatement(sql.toString());
             statement.setString(1, name);
             if (schema != null) {
                 statement.setString(2, schema.getName());
             }
+            resultSet.close();
             resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
@@ -426,6 +413,7 @@ public class OraclePlatform extends PlatformBaseImpl {
             Column firstColumn = firstTable.getColumn(resultSet.getString("COLUMN_NAME"));
 
             statement.setString(1, secondConstraint);
+            resultSet.close();
             resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
@@ -449,6 +437,29 @@ public class OraclePlatform extends PlatformBaseImpl {
 
         } catch (SQLException e) {
             throw new DatabaseOperationException("Can't get foreign key", e);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
+        }
+    }
+
+    private void closeStatement(Statement statement) {
+        try {
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeResultSet(ResultSet set) {
+        try {
+            if (set != null) {
+                set.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -474,18 +485,20 @@ public class OraclePlatform extends PlatformBaseImpl {
 
     @Override
     public Check loadCheck(Schema schema, String name) throws DatabaseOperationException {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
             StringBuilder sql = new StringBuilder("SELECT * FROM SYS.ALL_CONSTRAINTS WHERE CONSTRAINT_NAME=?");
             if (schema != null) {
                 sql.append(" AND OWNER=?");
             }
 
-            PreparedStatement statement = dbConnection.prepareStatement(sql.toString());
+            statement = dbConnection.prepareStatement(sql.toString());
             statement.setString(1, name);
             if (schema != null) {
                 statement.setString(2, schema.getName());
             }
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
             if(!resultSet.next() || !"C".equals(resultSet.getString("CONSTRAINT_TYPE"))) {
                 return null;
@@ -497,11 +510,13 @@ public class OraclePlatform extends PlatformBaseImpl {
             if (schema != null) {
                 sql.append(" AND OWNER=?");
             }
+            statement.close();
             statement = dbConnection.prepareStatement(sql.toString());
             statement.setString(1, name);
             if (schema != null) {
                 statement.setString(2, schema.getName());
             }
+            resultSet.close();
             resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
@@ -524,6 +539,9 @@ public class OraclePlatform extends PlatformBaseImpl {
 
         } catch (SQLException e) {
             throw new DatabaseOperationException("Can't get check", e);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
     }
 
